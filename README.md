@@ -1,152 +1,151 @@
-# 🛍️ SneakRush
+# SneakRush — Sistema de E-commerce
 
-SneakRush es un sistema web de e-commerce desarrollado en ASP.NET MVC, orientado a la gestión integral de una tienda de zapatillas. El proyecto integra seguridad avanzada, control de accesos mediante permisos dinámicos (patrón Composite) y herramientas de administración robustas.
-
----
-
-## 🚀 Funcionalidades principales
-
-### 🔐 Seguridad y acceso
-
-* Autenticación de usuarios (Administrador, Webmaster y Cliente)
-* Encriptación de contraseñas (SHA256)
-* Política de contraseñas y restablecimiento obligatorio
-* Control de acceso basado en permisos dinámicos
-
-### 🧩 Sistema de permisos (Composite)
-
-* Implementación del patrón Composite
-* Permisos organizados en:
-
-  * Familias (roles)
-  * Patentes (acciones)
-* Asignación dinámica de permisos a usuarios
-* Validación de permisos en controladores y vistas
-
-### 🛒 Tienda online
-
-* Visualización de productos
-* Filtros por categoría y marca
-* Carrito de compras
-* Registro de ventas e historial
-
-### 🧾 Gestión de ventas
-
-* Registro de ventas con detalle
-* Exportación e importación de ventas en XML
-* Persistencia en base de datos
-
-### 🧰 Panel de administración
-
-* Gestión de:
-
-  * Productos
-  * Categorías
-  * Marcas
-* Subida de imágenes de productos
-* Control total del sistema
-
-### 📊 Bitácora
-
-* Registro de acciones del sistema:
-
-  * Inicio de sesión
-  * Operaciones CRUD
-  * Errores
-* Seguimiento de actividad por usuario
-
-### 🧮 Integridad de datos
-
-* Implementación de DVH y DVV
-* Verificación automática al iniciar sesión
-* Detección de corrupción de datos
-* Opciones de restauración y recalculado
-
-### 💾 Backup y Restore
-
-* Generación de backups de la base de datos
-* Restauración desde archivo
-* Controlado por permisos específicos
-
-### 🌐 WebService
-
-* Servicio XML para consulta de productos con stock
+Plataforma web de e-commerce desarrollada en ASP.NET MVC, enfocada en seguridad, control de accesos dinámico y arquitectura escalable.
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/shop.svg" width="20"/> Descripción
 
-* **Backend:** C# – ASP.NET MVC (.NET Framework)
-* **Frontend:** HTML, CSS, Bootstrap, JavaScript, jQuery
-* **Base de datos:** SQL Server
-* **Arquitectura:** Capas (BE, BLL, DAL, UI)
-* **Seguridad:** SHA256 + AES
-* **Patrones:** Composite (permisos)
+SneakRush es una aplicación web diseñada para la gestión integral de una tienda de zapatillas.  
+Integra mecanismos avanzados de seguridad, un sistema de permisos dinámico basado en el patrón Composite y herramientas administrativas robustas.
 
 ---
 
-## 🧱 Arquitectura del sistema
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/shield-lock.svg" width="20"/> Seguridad y acceso
+
+- Autenticación de usuarios (Administrador, Webmaster y Cliente)  
+- Encriptación de contraseñas con SHA256  
+- Políticas de contraseñas y restablecimiento obligatorio  
+- Control de acceso basado en permisos dinámicos  
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/diagram-3.svg" width="20"/> Sistema de permisos (Patrón Composite)
+
+- Implementación del patrón Composite  
+- Organización de permisos en:
+  - Familias (roles)  
+  - Patentes (acciones)  
+- Asignación dinámica de permisos a usuarios  
+- Validación en tiempo real en controladores y vistas  
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/cart.svg" width="20"/> Tienda online
+
+- Visualización de productos  
+- Filtros por categoría y marca  
+- Carrito de compras  
+- Historial de compras  
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/receipt.svg" width="20"/> Gestión de ventas
+
+- Registro de ventas con detalle  
+- Exportación e importación en formato XML  
+- Persistencia en base de datos  
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/tools.svg" width="20"/> Panel de administración
+
+- Gestión de:
+  - Productos  
+  - Categorías  
+  - Marcas  
+- Subida de imágenes de productos  
+- Control completo del sistema  
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/journal-text.svg" width="20"/> Bitácora
+
+- Registro de acciones del sistema:
+  - Inicio de sesión  
+  - Operaciones CRUD  
+  - Errores  
+- Seguimiento de actividad por usuario  
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/database-check.svg" width="20"/> Integridad de datos
+
+- Implementación de DVH (Dígito Verificador Horizontal)  
+- Implementación de DVV (Dígito Verificador Vertical)  
+- Verificación automática al iniciar sesión  
+- Detección de corrupción de datos  
+- Opciones de restauración y recalculado  
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/hdd-stack.svg" width="20"/> Backup y Restore
+
+- Generación de backups de la base de datos  
+- Restauración desde archivo  
+- Controlado mediante permisos específicos  
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/cloud.svg" width="20"/> Web Service
+
+- Servicio XML para consulta de productos con stock  
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/code-slash.svg" width="20"/> Tecnologías utilizadas
+
+- **Backend:** C# — ASP.NET MVC (.NET Framework)  
+- **Frontend:** HTML, CSS, Bootstrap, JavaScript, jQuery  
+- **Base de datos:** SQL Server  
+- **Arquitectura:** Capas (BE, BLL, DAL, UI)  
+- **Seguridad:** SHA256 + AES  
+- **Patrón de diseño:** Composite  
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/boxes.svg" width="20"/> Arquitectura del sistema
 
 El proyecto está estructurado en capas:
 
-* **BE (Business Entities):** Entidades del dominio
-* **BLL (Business Logic Layer):** Lógica de negocio
-* **DAL (Data Access Layer):** Acceso a datos
-* **UI (MVC):** Controladores y vistas
+- **BE (Business Entities):** Entidades del dominio  
+- **BLL (Business Logic Layer):** Lógica de negocio  
+- **DAL (Data Access Layer):** Acceso a datos  
+- **UI (MVC):** Controladores y vistas  
 
 ---
 
-## 🔐 Sistema de permisos
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/key.svg" width="20"/> Modelo de permisos
 
-SneakRush implementa un sistema de permisos flexible basado en el patrón Composite:
+SneakRush implementa un sistema de permisos jerárquico y flexible:
 
-* Cada usuario posee una estructura de permisos jerárquica
-* Se validan permisos en tiempo real
-* Permite restringir acciones específicas como:
-
-  * Crear productos
-  * Eliminar usuarios
-  * Realizar backups
-  * Ver bitácora
-
----
-
-## 📌 Características destacadas
-
-✔ Control total de seguridad y accesos
-✔ Arquitectura escalable por capas
-✔ Implementación de integridad de datos (DVH/DVV)
-✔ Sistema de permisos profesional y dinámico
-✔ Registro completo de actividad (bitácora)
-✔ Funcionalidades avanzadas de administración
+- Cada usuario posee una estructura de permisos propia  
+- Validación de permisos en tiempo real  
+- Permite restringir acciones como:
+  - Crear productos  
+  - Eliminar usuarios  
+  - Realizar backups  
+  - Acceder a la bitácora  
 
 ---
 
-## 📷 Capturas (opcional)
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/star.svg" width="20"/> Características destacadas
 
-*Agregar imágenes del sistema aquí*
+- Control total de seguridad y accesos  
+- Arquitectura escalable por capas  
+- Integridad de datos con DVH y DVV  
+- Sistema de permisos profesional y dinámico  
+- Registro completo de actividad (bitácora)  
+- Funcionalidades avanzadas de administración  
 
 ---
 
-## 📦 Instalación
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/image.svg" width="20"/> Capturas
+
+_Agregar imágenes del sistema_
+
+---
+
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/download.svg" width="20"/> Instalación
 
 1. Clonar el repositorio:
-
-```
-git clone https://github.com/TU-USUARIO/SneakRush.git
-```
-
-2. Configurar la cadena de conexión en `Web.config`
-
-3. Ejecutar el script SQL de la base de datos
-
-4. Abrir el proyecto en Visual Studio y ejecutar
-
----
-
-
----
-
-## 📄 Licencia
-
-Este proyecto es de uso académico.
