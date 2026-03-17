@@ -144,10 +144,6 @@ git clone https://github.com/TU-USUARIO/SneakRush.git
 
 ---
 
-## 👨‍💻 Autor
-
-Desarrollado por **Lautaro Torres Pandolfo**
-Estudiante de Negocios y Tecnología – ITBA
 
 ---
 
