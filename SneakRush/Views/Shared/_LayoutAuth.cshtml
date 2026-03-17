@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SneakRush</title>
+
+    @Styles.Render("~/Content/css")
+    @* tu bundle base *@
+
+    <link href="~/Content/DiseñosCliente/Index.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body class="sb-nav-fixed bg-primary">
+    <!-- NAVBAR -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="#" data-translate="app_title">SneakRush</a>
+
+        <div class="ms-auto d-flex align-items-center">
+            <select id="comboIdioma" class="form-select form-select-sm bg-dark text-white border-0 me-3"
+                    style="width: 130px;" onchange="cambiarIdioma(this.value)">
+                <option value="es">Español 🇪🇸</option>
+                <option value="en">English 🇺🇸</option>
+            </select>
+        </div>
+    </nav>
+
+    <!-- FONDO + CENTRADO DEL LOGIN -->
+    <div class="fondo-login">
+        <div class="login-container">
+            @RenderBody()
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/Idioma/cambiarIdioma.js"></script>
+    @RenderSection("scripts", required: false)
+
+    <!-- Este Script es del sistema multidioma -->
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            // Defino la variable 'combo' antes de usarla
+            const combo = document.getElementById('comboIdioma');
+            const idiomaGuardado = localStorage.getItem('idioma') || 'es';
+
+            if (combo) {
+                combo.value = idiomaGuardado;
+                await cargarIdioma(idiomaGuardado);
+            }
+        });
+
+        async function cambiarIdioma(idioma) {
+            localStorage.setItem('idioma', idioma);
+            await cargarIdioma(idioma);
+
+            try {
+                const response = await fetch(`/Home/CambiarIdioma?codigo=${idioma}`);
+                if (!response.ok) {
+                    console.error("Error del servidor al cambiar idioma:", response.status);
+                } else {
+                    console.log("Idioma cambiado correctamente:", idioma);
+                }
+            } catch (error) {
+                console.error("Error al llamar a CambiarIdioma:", error);
+            }
+        }
+
+        async function cargarIdioma(codigo) {
+            try {
+                // Devuelvo La ruta que debe empezar sin tilde (~)
+                const response = await fetch(`/Idiomas/lang_${codigo}.json`);
+                const textos = await response.json();
+
+                // Reemplazo los textos en todos los elementos con data-translate
+                document.querySelectorAll("[data-translate]").forEach(el => {
+                    const key = el.getAttribute("data-translate");
+                    if (textos[key]) el.innerText = textos[key];
+                });
+            } catch (error) {
+                console.error("Error al cargar idioma:", error);
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+

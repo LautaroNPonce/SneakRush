@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "PagosEfectuados";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-sm-12 text-center">
+        <br /><br />
+        @if ((bool)ViewData["Status"])
+        {
+            <h1 class="text-success" data-translate="payment_success_title">Gracias!</h1>
+            <i class="far fa-check-circle fa-9x text-success"></i>
+
+            <h2 class="text-success" data-translate="payment_success_msg">Su pago fue realizado con éxito</h2>
+            <h4 data-translate="transaction_id">ID de Transacción:</h4> @ViewData["IdTrasferencia"]
+
+            <br />
+
+            <a href="@Url.Action("Index", "TiendaOnline")" class="btn btn-primary" data-translate="back_to_store">Volver a la tienda</a>
+
+        }
+        else
+        {
+            <h1 class="text-danger">Perdon</h1>
+            <i class="fas fa-exclamation-circle fa-9x text-danger"></i>
+
+            <h2 class="text-danger" data-translate="payment_failed_msg">Su pago no fue realizado</h2>
+
+            <br />
+
+            <a href="@Url.Action("Index", "TiendaOnline")" class="btn btn-primary" data-translate="back_to_store">Volver a la tienda</a>
+        }
+
+
+
+    </div>
+</div>

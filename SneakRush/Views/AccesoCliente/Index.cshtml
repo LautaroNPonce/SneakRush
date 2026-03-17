@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    ViewBag.Title = "Login cliente";
+}
+
+<div class="card shadow-lg border-0 rounded-lg">
+    <div class="card-header">
+        <h3 class="text-center" data-translate="login_title">SneakRush</h3>
+    </div>
+
+    <div class="card-body">
+        <form action="@Url.Action("Index", "AccesoCliente")" method="post">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="txtcorreo" name="correo"
+                       placeholder="ejemplo@correo.com" required />
+                <label for="txtcorreo" data-translate="label_email">Ingrese su email</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="txtcontraseña" name="contraseña"
+                       placeholder="Contraseña" required />
+                <label for="txtcontraseña" data-translate="label_password">Ingrese su contraseña</label>
+            </div>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="error-container">@ViewBag.Error</div>
+            }
+
+            <button class="btn btn-primary" type="submit" data-translate="btn_login">Iniciar sesión</button>
+
+            <a class="small d-block mt-3"
+               href="@Url.Action("Reestablecer", "AccesoCliente")"
+               data-translate="forgot_password">
+                ¿Olvidaste tu contraseña?
+            </a>
+        </form>
+    </div>
+
+    <div class="card-footer text-center py-3">
+        <a href="@Url.Action("Registrar", "AccesoCliente")" class="small" data-translate="create_account">
+            ¿No te has creado una cuenta aún? ¡¡Registrate!!
+        </a>
+    </div>
+</div>

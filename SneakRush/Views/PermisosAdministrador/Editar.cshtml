@@ -1,0 +1,159 @@
+﻿@using SneakRush.Models
+@model VMEntidadPermisos
+
+@{
+    ViewBag.Title = "Editar permisos";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid px-4">
+
+    <h2 class="mt-4">Editar permisos de @Model.Tipo</h2>
+
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Resumen</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "PermisosAdministrador")">Permisos</a></li>
+        <li class="breadcrumb-item active">Editar</li>
+    </ol>
+
+    <!-- Info -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+            <i class="fas fa-user me-1"></i> Información
+        </div>
+        <div class="card-body">
+            <p><strong>Nombre:</strong> @Model.Nombre @Model.Apellido</p>
+            <p><strong>Correo:</strong> @Model.Correo</p>
+            <p><strong>Tipo:</strong> @Model.Tipo</p>
+            <p><strong>Rol:</strong> @Model.Rol</p>
+        </div>
+    </div>
+
+    <!-- Permisos -->
+    <div class="card mb-4 shadow-sm">
+
+        <div class="card-header">
+            <i class="fas fa-lock me-1"></i> Permisos disponibles
+        </div>
+
+        <div class="card-body">
+            <form method="post" action="@Url.Action("GuardarPermisos", "PermisosAdministrador")">
+
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <input type="hidden" name="Tipo" value="@Model.Tipo" />
+
+                <div class="accordion" id="accordionPermisos">
+
+                    @foreach (BE.Familia familia in ViewBag.Familias)
+                    {
+                        var hijos = familia.ObtenerHijos();
+
+                        if (hijos.Count == 0)
+                        {
+                            continue; // Si no tiene permisos válidos según rol, no se muestra
+                        }
+
+                        string collapseId = $"collapse_{familia.Id}";
+                        bool tieneFamilia = Model.Permisos.Any(p => p.Id == familia.Id);
+
+                        <div class="accordion-item mb-2">
+
+                            <h2 class="accordion-header" id="heading_@familia.Id">
+
+                                <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#@collapseId">
+
+                                    <input type="checkbox"
+                                           class="form-check-input me-2"
+                                           name="PermisosSeleccionados"
+                                           value="@familia.Id"
+                                           id="familia_@familia.Id"
+                                           @(tieneFamilia ? "checked" : "") />
+
+                                    <strong>@familia.Nombre</strong>
+                                </button>
+
+                            </h2>
+
+                            <div id="@collapseId" class="accordion-collapse collapse">
+
+                                <div class="accordion-body">
+
+                                    <div class="row">
+
+                                        @foreach (var patente in hijos)
+                                        {
+                                            bool tienePatente = Model.Permisos.Any(p => p.Id == patente.Id);
+
+                                            <div class="col-md-6 mb-2">
+
+                                                <div class="form-check">
+                                                    <input class="form-check-input"
+                                                           type="checkbox"
+                                                           name="PermisosSeleccionados"
+                                                           value="@patente.Id"
+                                                           id="permiso_@patente.Id"
+                                                           @(tienePatente ? "checked" : "") />
+
+                                                    <label class="form-check-label"
+                                                           for="permiso_@patente.Id">
+                                                        @patente.Nombre
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    }
+
+                </div>
+
+                <hr />
+
+                <div class="d-flex justify-content-between">
+                    <a href="@Url.Action("Index", "PermisosAdministrador")" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Guardar cambios
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+
+            $('input[id^="familia_"]').on('change', function () {
+                const id = this.id.replace('familia_', '');
+                const state = $(this).is(':checked');
+                $('#collapse_' + id + ' input[type="checkbox"]').prop('checked', state);
+            });
+
+            $('input[id^="permiso_"]').on('change', function () {
+                const collapse = $(this).closest('.accordion-collapse');
+                const id = collapse.attr('id').replace('collapse_', '');
+                const total = collapse.find('input[type="checkbox"]').length;
+                const checked = collapse.find('input[type="checkbox"]:checked').length;
+
+                $('#familia_' + id).prop('checked', total === checked);
+            });
+
+        });
+    </script>
+}

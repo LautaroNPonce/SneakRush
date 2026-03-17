@@ -1,0 +1,233 @@
+﻿@{
+    ViewBag.Title = "Panel de Control";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+@if (TempData["MensajeError"] != null)
+{
+    <div style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;">
+        @TempData["MensajeError"]
+    </div>
+}
+
+<h1 class="mt-4" data-translate="menu_dashboard">Panel de Control</h1>
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-success text-white mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6 data-translate="clientes_count">Cantidad Clientes</h6>
+                        <h6 id="totalcliente">0</h6>
+                    </div>
+                    <div class="col-sm-3">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-warning text-white mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6 data-translate="ventas_count">Cantidad Ventas</h6>
+                        <h6 id="totalventa">0</h6>
+                    </div>
+                    <div class="col-sm-3">
+                        <i class="fas fa-shopping-bag fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-danger text-white mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6 data-translate="productos_count">Cantidad Productos</h6>
+                        <h6 id="totalproducto">0</h6>
+                    </div>
+                    <div class="col-sm-3">
+                        <i class="fas fa-boxes fa-2x"> </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <span data-translate="sales_history">Historial de Ventas</span>
+    </div>
+
+    <div class="card-body">
+        <form action="@Url.Action("Bitacora", "Home")" method="post">
+            <div class="row align-items-end">
+                <div class="col-sm-2">
+                    <div class="mb-2">
+                        <label class="col-form-label" data-translate="label_start_date">Fecha de Inicio</label>
+                        <input class="form-control" type="text" id="txtfechainicio" name="fechainicio" />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2">
+                        <label class="col-form-label" data-translate="label_end_date">Fecha Final</label>
+                        <input class="form-control" type="text" id="txtfechafin" name="fechafin" />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="mb-2">
+                        <label class="col-form-label" data-translate="label_transfer_id">Id de la Transferencia</label>
+                        <input class="form-control" type="text" id="txtidtrasferencia" name="idtrasferencia" />
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="d-grid mb-2">
+                        <button class="btn btn-primary" id="btnbuscar" type="button">
+                            <i class="fas fa-search"></i> <span data-translate="btn_search">Buscar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="d-grid mb-2">
+                        <a href="@Url.Action("Bitacora", "Home")" class="btn btn-dark">
+                            <i class="fas fa-book"></i> <span data-translate="btn_log">Bitácora</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="d-grid mb-2">
+                        <a href="@Url.Action("ExportarVentasXml", "Home")" class="btn btn-outline-secondary">
+                            <i class="fas fa-file-code"></i> <span data-translate="btn_export">Exportar XML</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form action="@Url.Action("ImportarXML", "Home")" method="post" enctype="multipart/form-data">
+            <div class="d-flex align-items-center gap-2">
+                <input type="file" name="archivoXml" accept=".xml" class="form-control form-control-sm w-auto" required />
+                <button type="submit" class="btn btn-outline-secondary btn-sm w-auto">
+                    <i class="fas fa-file-import"></i> <span data-translate="btn_import">Importar XML</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <table id="Tabla1" class="display cell-border" style="width:100%">
+                <thead>
+                    <tr>
+                        <th data-translate="col_fecha">Fecha de Venta</th>
+                        <th data-translate="col_cliente">Cliente</th>
+                        <th data-translate="col_producto">Producto</th>
+                        <th data-translate="col_precio">Precio</th>
+                        <th data-translate="col_cantidad">Cantidad</th>
+                        <th data-translate="col_total">Total</th>
+                        <th data-translate="col_transaccion">Id de Transacción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script>
+
+      var TablaDatos;
+
+      $(document).ready(function () {
+
+          $("#txtfechainicio").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
+          $("#txtfechafin").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
+
+          jQuery.ajax({
+              url: '@Url.Action("VistaDashBoards", "Home")',
+              type: 'GET',
+              dataType: 'json',
+              contentType: "application/json; charset=utf-8",
+
+              success: function (data) {
+
+                  var objeto = data.resultado;
+                  $("#totalcliente").text(objeto.TotalCliente);
+                  $("#totalventa").text(objeto.TotalVenta);
+                  $("#totalproducto").text(objeto.TotalProducto);
+              }
+          });
+
+          var Url = '@Url.Action("ListaReporte", "Home")' +
+              "?fechainicio=" + $("#txtfechainicio").val() +
+              "&fechafin=" + $("#txtfechafin").val() +
+              "&idtrasferencia=" + $("#txtidtrasferencia").val();
+
+          // Detecta el idioma actual (por si estás en inglés o español)
+          var idiomaActual = localStorage.getItem("idioma") || "es";
+
+          // URLs de idioma para DataTables
+          var urlsIdiomas = {
+              "es": "https://cdn.datatables.net/plug-ins/2.3.1/i18n/es-ES.json",
+              "en": "https://cdn.datatables.net/plug-ins/2.3.1/i18n/en-GB.json"
+          };
+
+          TablaDatos = $("#Tabla1").DataTable({
+              responsive: true,
+              ordering: false,
+              ajax: {
+                  url: Url,
+                  type: 'GET',
+                  dataType: 'json'
+              },
+              columns: [
+                  { data:"FechaVenta" },
+                  { data:"Cliente" },
+                  { data:"Producto" },
+                  { data:"Precio" },
+                  { data:"Cantidad" },
+                  { data:"Total" },
+                  { data:"IdTrasferencia" }
+              ],
+              // Ahora el idioma se carga dinámicamente
+              language: {
+                  url: urlsIdiomas[idiomaActual]
+              }
+          });
+
+      })
+
+        $("#btnbuscar").on("click", function () {
+            var nueva_url = '@Url.Action("ListaReporte", "Home")' +
+                "?fechainicio=" + $("#txtfechainicio").val() +
+                "&fechafin=" + $("#txtfechafin").val() +
+                "&idtrasferencia=" + $("#txtidtrasferencia").val();
+
+            TablaDatos.ajax.url(nueva_url).load();
+        });
+
+        // Agrego esta linea para recargar las traducciones visibles
+        (async function () {
+            const idiomaActual = localStorage.getItem('idioma') || 'es';
+            await cargarIdioma(idiomaActual);
+        })();
+
+    </script>
+}
+
+

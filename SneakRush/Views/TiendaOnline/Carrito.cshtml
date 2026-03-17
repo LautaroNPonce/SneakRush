@@ -1,0 +1,653 @@
+﻿
+@{
+    ViewBag.Title = "Carrito";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+
+                        <!-- Detalle Producto -->
+                        <div class="col-sm-9">
+                            <div class="me-2">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="ms-2 mt-2" data-translate="cart_detail">Detalle Carrito</h5>
+                                    <a class="btn btn-primary" href="@Url.Action("Index", "TiendaOnline")">
+                                        <i class="fas fa-cart-plus"></i> <span data-translate="continue_shopping">Seguir Comprando</span>
+                                    </a>
+                                </div>
+
+                                <hr class="mt-2 mb-2">
+
+                                <div id="productos-carrito">
+                                    <div class="card mb-2 card-producto">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-2 align-self-center d-flex justify-content-center">
+                                                    <img class="rounded" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" style="width:100px;height:100px" />
+                                                </div>
+
+                                                <div class="col-sm-4 align-self-center">
+                                                    <span class="fw-bold d-block" data-translate="brand">Marca</span>
+                                                    <span data-translate="product_name">Nombre del Producto</span>
+                                                </div>
+
+                                                <div class="col-sm-2 align-self-center">
+                                                    <span data-translate="price">Precio: $1500</span>
+                                                </div>
+
+                                                <div class="col-sm-2 align-self-center">
+                                                    <div class="d-flex">
+                                                        <button class="btn btn-outline-secondary btn-restar rounded-0">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <input class="form-control input-cantidad p-1 text-center rounded-0" style="width:40px" disabled />
+                                                        <button class="btn btn-outline-secondary btn-sumar rounded-0">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-2 align-self-center">
+                                                    <button class="btn btn-outline-danger btn-eliminar">
+                                                        <i class="far fa-trash-alt"></i> <span data-translate="delete">Eliminar</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-end">
+                                    <label class="align-self-center"><b data-translate="total">Total:</b> $<span id="total">0</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Detalle de envio -->
+                        <div class="col-sm-3">
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <h5 class="card-title" data-translate="shipping_detail">Detalle de Envío</h5>
+                                    <form>
+                                        <div class="mb-2">
+                                            <label for="cboprovincia" class="form-label" data-translate="province">Provincia:</label>
+                                            <select class="form-select form-select-sm" id="cboprovincia"></select>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="cbopartido" class="form-label" data-translate="district">Partido:</label>
+                                            <select class="form-select form-select-sm" id="cbopartido"></select>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="cbolocalidad" class="form-label" data-translate="locality">Localidad:</label>
+                                            <select class="form-select form-select-sm" id="cbolocalidad"></select>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="txtnombrecontacto" class="form-label" data-translate="contact_name">Nombre de Contacto:</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtnombrecontacto" autocomplete="off">
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="txtdireccion" class="form-label" data-translate="address">Dirección:</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtdireccion" autocomplete="off">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="txttelefono" class="form-label" data-translate="phone">Teléfono:</label>
+                                            <input type="text" class="form-control form-control-sm" id="txttelefono" autocomplete="off">
+                                        </div>
+                                        <div class="d-grid">
+                                            <button class="btn btn-primary mb-2" type="button" onclick="RealizarPago()">
+                                                <i class="fa-brands fa-paypal"></i> <span data-translate="finish_payment">Terminar y Procesar el Pago</span>
+                                            </button>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button class="btn btn-success" type="button" onclick="EnviarWhatsApp()">
+                                                <i class="fa-brands fa-whatsapp"></i> <span data-translate="other_payment">Otro método de Pago</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+
+    <script>
+        const URL_OBTENER_PROVINCIA = '@Url.Action("ObtenerProvincia", "TiendaOnline")';
+        const URL_OBTENER_PARTIDO = '@Url.Action("ObtenerPartido", "TiendaOnline")';
+        const URL_OBTENER_LOCALIDAD = '@Url.Action("ObtenerLocalidad", "TiendaOnline")';
+
+
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '@Url.Action("ListarProductoCarrito", "TiendaOnline")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+
+                    $("#productos-carrito").html("");
+
+                    $("#productos-carrito").LoadingOverlay("hide");
+
+                    $.each(response.data, function (i, item) {
+
+                        $("<div>").addClass("card mb-2 card-producto").append(
+                            $("<div>").addClass("card-body").append(
+                                $("<div>").addClass("row").append(
+                                    $("<div>").addClass("col-sm-2 align-self-center d-flex justify-content-center").append(
+                                        $("<img>").addClass("rounded")
+                                            .attr("src", "data:image/" + item.oProducto.Extension + ";base64," + item.oProducto.Base64)
+                                            .css({ "width": "100px", "height": "100px" })
+                                    ),
+                                    $("<div>").addClass("col-sm-4 align-self-center").append(
+                                        $("<span>").addClass("fw-bold d-block").text(item.oProducto.oMarca.Descripcion),
+                                        $("<span>").text(item.oProducto.Nombre)
+                                    ),
+                                    $("<div>").addClass("col-sm-2 align-self-center").append(
+                                        $("<span>").text(item.oProducto.Precio.toFixed(2) + " USD")
+                                    ),
+                                    $("<div>").addClass("col-sm-2 align-self-center").append(
+                                        $("<div>").addClass("d-flex").append(
+                                            $("<button>").addClass("btn btn-outline-secondary btn-restar rounded-0")
+                                                .attr("data-idproducto", item.oProducto.IdProducto)
+                                                .append($("<i>").addClass("fas fa-minus")),
+                                            $("<input>").addClass("form-control input-cantidad p-1 text-center rounded-0")
+                                                .css({ "width": "40px" })
+                                                .val(item.Cantidad)
+                                                .attr("readonly", true)
+                                                .attr("data-idproducto", item.oProducto.IdProducto)
+                                                .attr("data-precio", item.oProducto.Precio)
+                                                .data("oProducto", item.oProducto),
+
+                                            $("<button>").addClass("btn btn-outline-secondary btn-sumar rounded-0")
+                                                .attr("data-idproducto", item.oProducto.IdProducto)
+                                                .append($("<i>").addClass("fas fa-plus"))
+                                        )
+                                    ),
+                                    $("<div>").addClass("col-sm-2 align-self-center").append(
+                                        $("<button>").addClass("btn btn-outline-danger btn-eliminar")
+                                            .attr("data-idproducto", item.oProducto.IdProducto)
+                                            .append($("<i>").addClass("fas fa-trash-alt"), " Eliminar")
+                                    )
+                                )
+                            )
+                        ).appendTo("#productos-carrito");
+
+
+
+
+                    })
+                    sumarTotal();
+                },
+                // Esto indica que el loading se ocultar si hay un error
+                error: function (error) {
+                    $("#productos-carrito").LoadingOverlay("hide");
+                },
+                // Miesntras se consulta la info desde la BD con este beforeSend se visualiza ese loading
+                beforeSend: function () {
+                    $("#productos-carrito").LoadingOverlay("show");
+                }
+
+            });
+
+
+            ListarProvincia();
+        });
+
+        function ListarProvincia() {
+
+            $("#cboprovincia").html("");
+            $("<option>").attr("value", "00").prop("disabled", true).prop("selected", true).text("Seleccionar").appendTo("#cboprovincia");
+
+            $.ajax({
+                url: URL_OBTENER_PROVINCIA,
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.lista != null) {
+                    $.each(data.lista, function (i, item) {
+                        $("<option>").attr("value", item.IdProvincia).text(item.Descripcion).appendTo("#cboprovincia");
+                    });
+                    ListarPartido();
+                    }
+                }
+            });
+        }
+
+        $("#cboprovincia").on("change", ListarPartido);
+
+        function ListarPartido() {
+
+            $("#cbopartido").html("");
+            $("<option>").attr("value", "00").prop("disabled", true).prop("selected", true).text("Seleccionar").appendTo("#cbopartido");
+
+            $.ajax({
+                url: URL_OBTENER_PARTIDO,
+                type: "POST",
+                data: JSON.stringify({ IdProvincia: $("#cboprovincia").val() }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                if (data.lista != null) {
+                    $.each(data.lista, function (i, item) {
+                        $("<option>").attr("value", item.IdPartido).text(item.Descripcion).appendTo("#cbopartido");
+                    });
+                    ListarLocalidad();
+                    }
+                }
+            });
+        }
+
+        $("#cbopartido").on("change", ListarLocalidad);
+
+        function ListarLocalidad() {
+
+            $("#cbolocalidad").html("");
+            $("<option>").attr("value", "00").prop("disabled", true).prop("selected", true).text("Seleccionar").appendTo("#cbolocalidad");
+
+            $.ajax({
+                url: URL_OBTENER_LOCALIDAD,
+                type: "POST",
+                data: JSON.stringify({
+                    IdProvincia: $("#cboprovincia").val(),
+                    IdPartido: $("#cbopartido").val()
+                }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                if (data.lista != null) {
+                    $.each(data.lista, function (i, item) {
+                        $("<option>").attr("value", item.IdLocalidad).text(item.Descripcion).appendTo("#cbolocalidad");
+                    });
+                    }
+                }
+            });
+        }
+
+        function sumarTotal() {
+            var suma = 0;
+            $("input.input-cantidad").each(function () {
+                var precio = parseFloat($(this).attr("data-precio"));
+                var cantidad = parseInt($(this).val());
+                suma += precio * cantidad;
+            });
+            $("#total").text(suma.toFixed(2));
+        }
+
+
+        $(document).on("click", ".btn-sumar", function () {
+            var btn = $(this);
+            var input = btn.siblings("input.input-cantidad");
+            var cantidad = parseInt(input.val()) + 1;
+            var idproducto = btn.data("idproducto");
+
+            $.ajax({
+                url: '@Url.Action("OperacionCarrito", "TiendaOnline")',
+                type: "POST",
+                data: JSON.stringify({ idproducto: idproducto, sumar: true }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function () { btn.LoadingOverlay("show"); },
+                success: function (data) {
+                    btn.LoadingOverlay("hide");
+                    if (data.respuesta) {
+                        input.val(cantidad);
+                        sumarTotal();
+                    }
+                    else
+                    {
+                        swal("", data.mensaje, "warning");
+                    }
+                },
+                error: function () { btn.LoadingOverlay("hide"); }
+            });
+        });
+
+
+        $(document).on("click", ".btn-restar", function () {
+            var btn = $(this);
+            var input = btn.siblings("input.input-cantidad");
+            var cantidad = parseInt(input.val()) - 1;
+            var idproducto = btn.data("idproducto");
+
+            if (cantidad >= 1) {
+                $.ajax({
+                    url: '@Url.Action("OperacionCarrito", "TiendaOnline")',
+                    type: "POST",
+                    data: JSON.stringify({ idproducto: idproducto, sumar: false }),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function () { btn.LoadingOverlay("show"); },
+                    success: function (data) {
+                        btn.LoadingOverlay("hide");
+                        if (data.respuesta) {
+                            input.val(cantidad);
+                            sumarTotal();
+                        }
+                        else
+                        {
+                            swal("", data.mensaje, "warning");
+                        }
+                    },
+                    error: function () { btn.LoadingOverlay("hide"); }
+                });
+            }
+        });
+
+        $(document).on("click", ".btn-eliminar", function () {
+            var btn = $(this);
+            var idproducto = btn.data("idproducto");
+            var card = btn.closest(".card-producto");
+
+            $.ajax({
+                url: '@Url.Action("EliminarCarrito", "TiendaOnline")',
+                type: "POST",
+                data: JSON.stringify({ idproducto: idproducto }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.respuesta) {
+                        card.remove();
+                        MostrarLaCantidadDelCarrito();
+                        sumarTotal();
+                    }
+                    else
+                    {
+                        swal("", data.mensaje, "warning");
+                    }
+                }
+            });
+        });
+
+        function EnviarWhatsApp() {
+            const nombre = $("#txtnombrecontacto").val();
+            const direccion = $("#txtdireccion").val();
+            const telefono = $("#txttelefono").val();
+            const provincia = $("#cboprovincia option:selected").text();
+            const partido = $("#cbopartido option:selected").text();
+            const localidad = $("#cbolocalidad option:selected").text();
+            const total = $("#total").text();
+
+            let mensaje = `*Detalle de Envío*:%0A` +
+                `Nombre: ${nombre}%0A` +
+                `Dirección: ${direccion}%0A` +
+                `Teléfono: ${telefono}%0A` +
+                `Provincia: ${provincia}%0A` +
+                `Partido: ${partido}%0A` +
+                `Localidad: ${localidad}%0A%0A` +
+                `*Detalle del Carrito:*%0A`;
+
+            $("input.input-cantidad").each(function () {
+                const producto = $(this).data("oProducto");
+                const cantidad = $(this).val();
+                mensaje += `- ${producto.oMarca.Descripcion} ${producto.Nombre} x${cantidad} - $${producto.Precio * cantidad}%0A`;
+            });
+
+            mensaje += `%0A*Total:* $${total}`;
+
+            const numero = "541156218671";
+            const url = `https://wa.me/${numero}?text=${mensaje}`;
+            window.open(url, "_blank");
+        }
+
+        function RealizarPago() {
+
+            if (parseInt($("#cantidadcarrito").text()) == 0) {
+
+                swal("", "No existe ningun producto en el carrito", "warning");
+                return
+
+            }
+
+            if ($("#cbolocalidad").val() == null || $("#txtnombrecontacto").val() == "" || $("#txtdireccion").val() == "" || $("#txttelefono").val() == "")
+            {
+                swal("", "No puedes seguir con la compra sin completar los datos de detalle del envio", "warning");
+                return
+            }
+
+            var venta =
+            {
+                TotalProducto: $("input.input-cantidad").length,
+                MontoTotal: 0,
+                Contacto: $("#txtnombrecontacto").val(),
+                IdLocalidad: $("#cbolocalidad").val(),
+                Telefono: $("#txttelefono").val(),
+                Direccion: $("#txtdireccion").val()
+            }
+
+            var lista_carrito = [];
+            $("input.input-cantidad").each(function (i)
+            {
+                var producto = $(this).data("oProducto");
+                var cantidad = parseFloat($(this).val())
+
+                lista_carrito.push({
+                    oProducto: producto,
+                    Cantidad: cantidad
+                })
+            })
+
+            jQuery.ajax({
+                url: "@Url.Action("ProcesarPago", "TiendaOnline", null)",
+                type: "POST",
+                data: JSON.stringify({ oListaCarrito: lista_carrito, oVenta: venta }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    $.LoadingOverlay("hide")
+
+                    if (data.Status) {
+                        window.location.href = data.Link;
+                    }
+                    else
+                    {
+                        swal("", "Vuelva a intentarlo en unos minutos", "warning");
+                    }
+                },
+                beforeSend: function () {
+
+                    $.LoadingOverlay("show")
+                },
+                error: function (error) {
+
+                    $.LoadingOverlay("hide")
+                }
+            })
+        }
+
+
+    </script>
+
+}
+
+@*//$("<div>").addClass("card mb-2 card-producto").append(
+    //    $("<div>").addClass("card-body").append(
+    //        $("<div>").addClass("row").append(
+
+    //            //Columna 1
+    //            $("<div>").addClass("col-sm-2 align-self-center d-flex justify-content-center").append(
+    //                $("<img>").addClass("rounded").attr("src", "data:image/" + item.oProducto.Extension + ";base64," + item.oProducto.Base64)
+    //                    .css({ "width": "100px", "height": "100px" })
+    //            ),
+
+    //            //Columna 2
+    //            $("<div>").addClass("col-sm-4 align-self-center").append(
+    //                $("<span>").addClass("font-wight-bold d-block").text(item.oProducto.oMarca.Descripcion),
+    //                $("<span>").text(item.oProducto.Nombre)
+    //            ),
+
+    //            //Columna 3
+    //            $("<div>").addClass("col-sm-2 align-self-center").append(
+    //                $("<span>").text(item.oProducto.Precio.toFixed(2) + " USD")
+    //            ),
+
+    //            //Columna 4
+    //            $("<div>").addClass("col-sm-2 align-self-center").append(
+    //                $("<div>").addClass("d-flex").append(
+    //                    $("<button>").addClass("btn btn-outline-secondary btn-restar rounded-0").append($("<i>").addClass("fas fa-minus")),
+    //                    $("<input>").addClass("form-control input-cantidad p-1 text-center rounded-0").attr("disabled", "disabled")
+    //                        .css({ "width": "40px" })
+    //                        .data("oProducto", item.oProducto)
+    //                        .val(item.Cantidad),
+    //                    $("<button>").addClass("btn btn-outline-secondary btn-sumar rounded-0").append($("<i>").addClass("fas fa-plus")),
+    //                )
+    //            ),
+
+    //            $("<div>").addClass("col-sm-2 align-self-center").append(
+    //                $("<button>").addClass("btn btn-outline-danger btn-eliminar").append($("<i>").addClass("fas fa-trash-alt"), "Eliminar")
+    //                    .data("idproducto", item.oProducto.idproducto),
+    //            )
+    //        )
+    //    )
+    //).appendTo("#productos-carrito")*@
+
+
+@*//function sumarTotal() {
+    //    var sumaTotal = parseFloat(0)
+
+    //    $("input.input-cantidad").each(function (i) {
+    //        var precio = $(this).data("oProducto").Precio;
+    //        var cantidad = parseFloat($(this).val())
+
+    //        var subtotal = precio * cantidad;
+
+    //        sumaTotal += subtotal;
+    //    })
+
+    //    $("#total").text(sumaTotal.toFixed(2))
+    //    $("#total").data("sumatotal", sumaTotal)
+    //*@
+
+
+@*@*//Funcion para eliminar el producto*@
+@*$(document).on("click", ".btn-eliminar", function () {
+
+        var idproducto = $(this).data("idproducto");
+        var card_producto = $(this).parents("div.card-producto");
+
+        jQuery.ajax({
+            url: "@Url.Action("EliminarCarrito", "TiendaOnline")",
+            type: "POST",
+            data: JSON.stringify({ idproducto: idproducto }),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                if (data.respuesta) {
+
+                    card_producto.remove();
+                    MostrarLaCantidadDelCarrito();
+                    sumarTotal();
+
+                } else {
+                    swal("", data.mensaje, "warning")
+                }
+
+            }
+
+        })
+
+    })*@*
+
+
+@*//Funcion para disminuir la cantidad del producto*@
+@*$(document).on("click", ".btn-restar", function () {
+
+        var div_contenedor = $(this).parent("div.d-flex");
+        var input_cantidad = $(div_contenedor).find("input.input-cantidad");
+        var btn = $(this)
+        var idproducto = $(input_cantidad).data("oProducto").IdProducto;
+        var cantidad = parseInt($(input_cantidad).val()) - 1;
+
+        if (cantidad >= 1)
+        {
+            jQuery.ajax({
+                url: "@Url.Action("OperacionCarrito", "TiendaOnline")",
+                type: "POST",
+                data: JSON.stringify({ idproducto: idproducto, sumar: false }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    $(btn).LoadingOverlay("hide")
+
+                    if (data.respuesta) {
+                        $(input_cantidad).val(cantidad)
+                        sumarTotal()
+                    } else {
+                        swal("", data.mensaje, "warning")
+                    }
+
+                },
+                beforeSend: function () {
+                    $(btn).LoadingOverlay("show")
+                },
+                error: function (error) {
+                    $(btn).LoadingOverlay("hide")
+                }
+            })
+        }
+    })*@
+
+@*//Funcion para aumentar la cantidad del producto*@
+@*$(document).on("click", ".btn-sumar", function () {
+
+        var div_contenedor = $(this).parent("div.d-flex");
+        var input_cantidad = $(div_contenedor).find("input.input-cantidad");
+        var btn = $(this)
+        var idproducto = $(input_cantidad).data("oProducto").IdProducto;
+
+        jQuery.ajax({
+            url: "@Url.Action("OperacionCarrito", "TiendaOnline")",
+            type: "POST",
+            data: JSON.stringify({ idproducto: idproducto, sumar: true }),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                $(btn).LoadingOverlay("hide")
+
+                if (data.respuesta) {
+                    var cantidad = parseInt($(input_cantidad).val()) + 1;
+                    $(input_cantidad).val(cantidad)
+                    sumarTotal()
+                } else {
+                    swal("", data.mensaje, "warning")
+                }
+            },
+            beforeSend: function () {
+                $(btn).LoadingOverlay("show")
+            },
+            error: function (error) {
+                $(btn).LoadingOverlay("hide")
+            }
+        })
+    })*@
+
+
+@*$("
+    <input>").addClass("form-control input-cantidad p-1 text-center rounded-0")
+        .css({ "width": "40px" })
+        .val(item.Cantidad)
+        .attr("readonly", true)
+        .attr("data-idproducto", item.oProducto.IdProducto)
+        .attr("data-precio", item.oProducto.Precio),*@

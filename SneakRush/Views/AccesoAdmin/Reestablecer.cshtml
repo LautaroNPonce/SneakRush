@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    ViewBag.Title = "Recuperación de Contraseña";
+}
+
+<style>
+    body {
+        background: linear-gradient(to bottom right, #00c6ff, #0072ff);
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="card shadow border-0 rounded">
+            <div class="card-header bg-primary text-white text-center">
+                <h4 data-translate="reset_title">Recuperación de contraseña</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-muted text-center mb-4" data-translate="reset_instruction">
+                    Ingrese su dirección de correo electrónico y le enviaremos su nueva contraseña
+                </p>
+
+                <form action="@Url.Action("Reestablecer", "AccesoAdmin")" method="post">
+                    <div class="mb-3">
+                        <input class="form-control" name="correo" type="email" placeholder="Email" autocomplete="off" />
+                    </div>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger text-center">
+                            @ViewBag.Error
+                        </div>
+                    }
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="@Url.Action("Index", "AccesoAdmin")" class="small" data-translate="back_to_login">
+                        Regresar al login
+                    </a>
+                    <button type="submit" class="btn btn-success" data-translate="btn_reset_password">
+                        Restablecer contraseña
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

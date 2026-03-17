@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    ViewBag.Title = "Recuperar Contraseña";
+}
+
+<style>
+    body {|
+        background-image: url('/Content/Portadas/Portada 2.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .card {
+        background-color: rgba(255, 255, 255, 0.95);
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="card shadow border-0 rounded mt-5">
+            <div class="card-header bg-primary text-white text-center">
+                <h4 data-translate="reset_password_title">Recuperar Contraseña</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-center mb-4" data-translate="reset_password_text">
+                    Ingresá tu correo electrónico y te enviaremos una nueva contraseña.
+                </p>
+
+                <form action="@Url.Action("Reestablecer", "AccesoCliente")" method="post">
+                    <div class="mb-3">
+                        <label for="correo" class="form-label" data-translate="label_email">Correo electrónico</label>
+                        <input class="form-control" id="correo" name="correo" type="email" placeholder="ejemplo@email.com" autocomplete="off" required />
+                    </div>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-warning text-center">
+                            @ViewBag.Error
+                        </div>
+                    }
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-success" data-translate="btn_reset_password">
+                            Restablecer contraseña
+                            </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center py-3">
+                <a href="@Url.Action("Index", "AccesoCliente")" data-translate="back_to_login_reset">
+                    ¿Recordaste tu contraseña? Iniciar sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,294 @@
+{
+  "Palabras de": "_LayoutAdmin.cshtml ",
+
+  "app_title": "SneakRush",
+  "sidebar_summary": "SUMMARY",
+  "sidebar_maintenance": "MAINTENANCE",
+  "menu_dashboard": "Dashboard",
+  "menu_users": "Users",
+  "menu_categories": "Categories",
+  "menu_brands": "Brands",
+  "menu_products": "Products",
+
+  "1)Palabras de ": "_LayoutWebmaster.cshtml  ",
+
+  "menu_logout": "Log out",
+  "sidebar_management": "MANAGEMENT",
+  "menu_webmasters": "Webmasters",
+  "menu_backup_restore": "Backup / Restore",
+  "footer_copyright": "© 2025 SneakRush",
+
+  "2) Palabras de": "_LayoutCliente.cshtml",
+
+  "menu_home": "Home",
+  "menu_login": "Log in",
+  "menu_cart": "Cart",
+  "menu_my_purchases": "My purchases",
+
+  "3) Palabras de Views/TiendaOnline": "Index.cshtml",
+
+  "sidebar_categories": "Categories",
+  "sidebar_brands": "Brands",
+  "btn_apply_filters": "Apply Filters",
+  "badge_sale": "Sale",
+  "btn_view_options": "View options",
+  "btn_add_to_cart": "Add to cart",
+  "store_titlee": "Exclusive sneakers, at your fingertips",
+  "add_to_cart": "Add to cart",
+  "view_detail": "View Detail",
+
+  "3.1) Palabras de Views/TiendaOnline": "Carrito.cshtml",
+
+  "cart_detail": "Cart Details",
+  "continue_shopping": "Continue Shopping",
+  "brand": "Brand",
+  "product_name": "Product Name",
+  "price": "Price",
+  "delete": "Delete",
+  "total": "Total",
+  "shipping_detail": "Shipping Details",
+  "province": "Province",
+  "district": "District",
+  "locality": "Locality",
+  "contact_name": "Contact Name",
+  "address": "Address",
+  "phone": "Phone",
+  "finish_payment": "Finish and Process Payment",
+  "other_payment": "Other Payment Method",
+
+  "3.2) Palabras de Views/TiendaOnline": "Carrito.cshtml",
+
+  "my_purchases": "My Purchases",
+  "id": "# ID",
+  "date": "Date",
+  "amount": "Amount",
+  "transaction": "Transaction",
+  "no_purchases": "You haven't made any purchases yet.",
+
+  "3.3) Palabras de Views/TiendaOnline": "PagosEfectuados.cshtml",
+
+  "payment_success_title": "Thank you!",
+  "payment_success_msg": "Your payment was successfully completed",
+  "transaction_id": "Transaction ID:",
+  "back_to_store": "Return to store",
+  "payment_failed_title": "Sorry",
+  "payment_failed_msg": "Your payment was not completed",
+
+  "3.4) Palabras de Views/TiendaOnline": "DetalleProducto.cshtml",
+  "brand_label": "Brand:",
+  "currency": "USD",
+  "back": "Back",
+
+  "4) Palabras de Views/AccesoCliente": "Index.cshtml",
+
+  "login_title": "SneakRush",
+  "label_email": "Enter your email",
+  "label_password": "Enter your password",
+  "btn_login": "Login",
+  "forgot_password": "Forgot your password?",
+  "create_account": "Don't have an account yet? Register now!",
+
+  "4.1) Palabras de Views/AccesoCliente": "Registrar.cshtml",
+
+  "register_title": "Create an Account",
+  "label_firstname": "First Name",
+  "label_lastname": "Last Name",
+  "label_confirm_password": "Confirm Password",
+  "password_rules": "Password must be at least 8 characters long, with one uppercase and one lowercase letter.",
+  "btn_register": "Create Account",
+  "already_account": "Already have an account? Log in",
+  "password_rule_min": "Must be at least 8 characters long",
+  "password_rule_lower": "Must include at least one lowercase letter",
+  "password_rule_upper": "Must include at least one uppercase letter",
+
+  "4.2) Palabras de Views/AccesoCliente": "CambiarContraseña.cshtml",
+
+  "change_password_title": "Change Password",
+  "label_current_password": "Current Password",
+  "label_new_password": "New Password",
+  "btn_change_password": "Change Password",
+  "back_to_login": "Back to LogIn",
+  "password_valid": "Valid password",
+
+  "4.3) Palabras de Views/AccesoCliente": "Reestablecer.cshtml",
+
+  "reset_password_title": "Recover Password",
+  "reset_password_text": "Enter your email address and we will send you a new password.",
+  "btn_reset_password": "Reset password",
+  "back_to_login_reset": "Remembered your password? Sign in",
+
+  "4.4) Palabras de Views/AccesoCliente": "SistemaNoDisponible.cshtml",
+
+  "system_unavailable_title": "The system is currently unavailable",
+  "system_unavailable_integrity": "System integrity compromised",
+  "system_unavailable_contact": "Please contact an administrator.",
+
+  "5) Palabras de Views/AccesoAdmin": "Index.cshtml",
+  "admin_login_title": "Administrator - SneakRush",
+
+  "5.1) Palabras de Views/AccesoAdmin": "CambiarContraseña.cshtml",
+
+  "current_password": "Current Password",
+  "new_password": "New Password",
+  "confirm_password": "Confirm New Password",
+  "password_min": "Must be at least 8 characters long",
+  "password_minus": "Must include at least one lowercase letter",
+  "password_mayus": "Must include at least one uppercase letter",
+
+  "5.2) Palabras de Views/AccesoAdmin": "Reestablecer.cshtml",
+
+  "reset_title": "Password Recovery",
+  "reset_instruction": "Enter your email address and we’ll send you a new password.",
+
+  "5.3) Palabras de Views/AccesoAdmin": "AlertaIntegridadAdmin.cshtml",
+  "integrity_warning_title": "Integrity Warning Detected",
+  "integrity_warning_desc": "Inconsistencies were found in the verification digits.",
+  "integrity_important": "Important:",
+  "integrity_important_desc": "Please contact the webmaster to verify or restore the database integrity.",
+  "integrity_errors_title": "Detected Errors",
+  "integrity_no_errors": "No integrity issues detected.",
+  "continue_system": "Continue to the system",
+
+
+  "6) Palabras de Views/AccesoWebmaster": "Index.cshtml",
+
+  "webmaster_login_title": "WebMaster - SneakRush",
+  "webmaster_access_notice": "Access restricted to authorized personnel only.",
+
+  "6.1) Palabras de Views/AccesoWebmaster": "CambiarContraseña.cshtml",
+
+  "webmaster_change_password_title": "Change Password",
+
+  "6.2) Palabras de Views/AccesoWebmaster": "Reestablecer.cshtml",
+
+  "webmaster_reset_title": "Password Recovery",
+  "webmaster_reset_instructions": "Enter your email address and we will send you a new password.",
+
+  "6.3) Palabras de Views/AccesoWebmaster": "AlertaIntegridadAdmin.cshtml",
+  "integrity_issues_title": "Integrity issues detected",
+  "integrity_issues_message": "Inconsistencies were found in verification digits (DVH/DVV).",
+  "detected_errors": "Detected errors",
+  "column_table": "Table",
+  "column_error_type": "Error Type",
+  "column_record_id": "Record ID",
+  "no_integrity_issues": "No integrity issues detected.",
+  "btn_cancel": "Cancel",
+  "btn_recalculate": "Recalculate DVH/DVV",
+  "btn_restore_backup": "Restore from Backup",
+  "restoring_backup": "Restoring database...",
+  "restore_success": "Backup successfully restored.",
+  "restore_error": "Error restoring the backup.",
+
+  "7) Palabras de Views/Home": "Index.cshtml",
+
+  "clientes_count": "Clients Count",
+  "ventas_count": "Sales Count",
+  "productos_count": "Products Count",
+  "sales_history": "Sales History",
+  "label_start_date": "Start Date",
+  "label_end_date": "End Date",
+  "label_transfer_id": "Transfer ID",
+  "btn_search": "Search",
+  "btn_log": "Logbook",
+  "btn_export": "Export XML",
+  "btn_import": "Import XML",
+  "col_fecha": "Sale Date",
+  "col_cliente": "Customer",
+  "col_producto": "Product",
+  "col_precio": "Price",
+  "col_cantidad": "Quantity",
+  "col_total": "Total",
+  "col_transaccion": "Transaction ID",
+
+  "7.1) Palabras de Views/Home": "Bitacora.cshtml",
+
+  "log_title": "Logbook",
+  "filter_by_type": "Filter by type:",
+  "option_all": "All",
+  "option_user": "User",
+  "option_admin": "Administrator",
+  "option_webmaster": "Webmaster",
+  "col_accion": "Action",
+  "col_detalle": "Detail",
+  "col_usuario": "User",
+  "col_tipo": "Type",
+  "no_records_found": "No records found for the applied filters.",
+
+  "7.2) Palabras de Views/Home": "Usuarios.cshtml",
+
+  "breadcrumb_summary": "Summary",
+  "breadcrumb_users": "Users",
+  "user_list": "User List",
+  "btn_new_user": "Create new user",
+  "col_name": "First Name",
+  "col_lastname": "Last Name",
+  "col_email": "Email",
+  "col_active": "Active",
+  "user_modal_title": "User",
+  "label_name": "First Name",
+  "label_active": "Active",
+  "option_yes": "Yes",
+  "option_no": "No",
+  "btn_close": "Close",
+  "btn_save": "Save",
+  "error_generic": "An error occurred, please try again.",
+
+  "8) Palabras de Views/HomeWebmaster": "Index.cshtml",
+
+  "breadcrumb_webmasters": "Webmasters",
+  "webmaster_list": "Webmaster List",
+  "btn_new_webmaster": "Create new webmaster",
+  "webmaster_modal_title": "Webmaster",
+
+  "8.1) Palabras de Views/HomeWebmaster": "BackupRestore.cshtml",
+
+  "breadcrumb_backup": "Backup / Restore",
+  "backup_title": "Backup / Restore Operations",
+  "btn_backup": "Create Backup",
+  "btn_restore": "Restore Backup",
+  "label_select_file": "Select .bak file",
+
+  "9) Palabras de Views/Mantenimiento": "Categoria.cshtml",
+
+  "breadcrumb_maintenance": "Maintenance",
+  "breadcrumb_categories": "Category",
+  "categories_title": "Category List",
+  "btn_new_category": "Add a new category",
+  "col_description": "Description",
+  "modal_category_title": "Category",
+  "label_description": "Description",
+  "alert_error": "Please check the entered data.",
+
+  "9.1) Palabras de Views/Mantenimiento": "Marca.cshtml",
+
+  "breadcrumb_brand": "Brand",
+  "brand_title": "Brand List",
+  "btn_new_brand": "Add a new brand",
+  "modal_brand_title": "Brand",
+  "alert_delete_title": "Are you sure?",
+  "alert_delete_text": "Do you want to delete this brand?",
+  "alert_delete_confirm": "Yes",
+  "alert_delete_cancel": "No",
+  "alert_delete_error": "The brand could not be deleted",
+
+  "9.2) Palabras de Views/Mantenimiento": "Producto.cshtml",
+
+  "breadcrumb_product": "Products",
+  "product_title": "Product List",
+  "btn_new_product": "Add a new product",
+  "btn_view_xml": "View products with stock in XML",
+  "btn_download_xml": "Download XML",
+  "modal_product_title": "Product",
+  "label_brand": "Brand",
+  "label_category": "Category",
+  "label_price": "Price",
+  "label_stock": "Stock",
+
+  "10) Palabras de Views/Acceso": "VerificarCorreo.cshtml",
+  "verify_email_title": "Verify Email",
+  "verify_email_label": "Enter your email address:",
+  "verify_email_error": "The entered email is not registered.",
+  "verify_email_register": "Register as a new customer",
+  "verify_email_continue": "Continue"
+
+}

@@ -1,0 +1,77 @@
+﻿@model List<BE.Bitacora>
+
+@{
+    ViewBag.Title = "Bitácora";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h2 class="mt-4" data-translate="log_title">Bitácora</h2>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="@Url.Action("Bitacora", "Home")">
+
+            <div class="row g-2 align-items-end">
+                <div class="col-md-3">
+                    <label for="tipoUsuario" class="form-label" data-translate="filter_by_type">Filtrar por tipo:</label>
+                    <select class="form-control" id="tipoUsuario" name="tipoUsuario">
+                        <option value="" data-translate="option_all">Todos</option>
+                        <option value="Usuario" data-translate="option_user" @(ViewBag.TipoUsuario == "Usuario" ? "selected" : "")>Usuario</option>
+                        <option value="Administrador" data-translate="option_admin" @(ViewBag.TipoUsuario == "Administrador" ? "selected" : "")>Administrador</option>
+                        <option value="Webmaster" data-translate="option_webmaster" @(ViewBag.TipoUsuario == "Webmaster" ? "selected" : "")>Webmaster</option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="fechaInicio" class="form-label" data-translate="label_start_date">Fecha desde:</label>
+                    <input type="date" class="form-control" name="fechaInicio" id="fechaInicio" value="@ViewBag.FechaInicio" />
+                </div>
+
+                <div class="col-md-3">
+                    <label for="fechaFin" class="form-label" data-translate="label_end_date">Fecha hasta:</label>
+                    <input type="date" class="form-control" name="fechaFin" id="fechaFin" value="@ViewBag.FechaFin" />
+                </div>
+
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-dark w-100">
+                        <i class="fas fa-search"></i> <span data-translate="btn_search">Buscar</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="thead-dark">
+                <tr>
+                    <th data-translate="col_fecha">Fecha</th>
+                    <th data-translate="col_accion">Acción</th>
+                    <th data-translate="col_detalle">Detalle</th>
+                    <th data-translate="col_usuario">Usuario</th>
+                    <th data-translate="col_tipo">Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@item.Accion</td>
+                            <td>@item.Detalle</td>
+                            <td>@item.Usuario</td>
+                            <td>@item.TipoUsuario</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center" data-translate="no_records_found">No se encontraron registros con los filtros aplicados.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

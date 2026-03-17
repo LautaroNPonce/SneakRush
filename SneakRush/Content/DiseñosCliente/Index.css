@@ -1,0 +1,160 @@
+﻿/* 🔹 Fondo general */
+body.bg-primary {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+/* 🔹 Fondo y centrado del login */
+.fondo-login {
+    flex: 1;
+    min-height: calc(100vh - 56px - 60px); /* alto total menos navbar y footer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0072ff 0%, #00c6ff 100%);
+    background-attachment: fixed;
+    padding: 30px;
+}
+
+/* 🔹 Contenedor del login */
+.login-container {
+    width: 100%;
+    max-width: 480px; /* ancho ideal */
+    display: flex;
+    justify-content: center;
+}
+
+/* 🔹 Card principal */
+.card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    width: 100%;
+}
+
+/* 🔹 Encabezado del formulario */
+.card-header {
+    background-color: #004080;
+    color: white;
+    padding: 1.2rem;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+/* 🔹 Cuerpo del formulario */
+.card-body {
+    padding: 2rem;
+    background-color: #f9f9f9;
+}
+
+/* 🔹 Pie del formulario */
+.card-footer {
+    background-color: #f0f0f0;
+    padding: 15px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* 🔹 Inputs */
+.form-floating {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 12px 15px;
+    font-size: 1.1rem;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+    .form-control:focus {
+        border-color: #0072ff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 114, 255, 0.25);
+    }
+
+/* 🔹 Botón principal */
+.btn-primary {
+    background-color: #28a745;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    color: white;
+    width: 100%;
+}
+
+    .btn-primary:hover {
+        background-color: #218838;
+    }
+
+/* 🔹 Enlaces pequeños */
+.small {
+    color: #0072ff;
+    text-decoration: none;
+}
+
+    .small:hover {
+        text-decoration: underline;
+    }
+
+/* 🔹 Centrados */
+.text-center {
+    text-align: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+/* 🔹 Mensajes de error */
+.error-container {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* 🔹 Responsive */
+@media (max-width: 768px) {
+    .login-container .card {
+        max-width: 90%;
+    }
+}

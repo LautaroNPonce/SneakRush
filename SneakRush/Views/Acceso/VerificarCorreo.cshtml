@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Verifique su Correo";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+
+
+<div class="body-verificar">
+    <div class="card shadow">
+        <div class="card-header text-center bg-primary text-white">
+            <h4 data-translate="verify_email_title">Verificar Correo</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" action="@Url.Action("VerificarCorreo", "Acceso")">
+                <div class="form-group mb-3">
+                    <label for="correo" data-translate="verify_email_label">Ingresá tu correo electrónico:</label>
+                    <input type="email" name="correo" id="correo" class="form-control" required autocomplete="off" />
+                </div>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-warning">
+                        <span data-translate="verify_email_error">@ViewBag.Error</span><br />
+                        <a href="@Url.Action("Registrar", "AccesoCliente")" class="btn btn-sm btn-outline-primary mt-2" data-translate="verify_email_register">
+                            Registrarse como nuevo cliente
+                        </a>
+                    </div>
+                }
+
+            <button type="submit" class="btn btn-primary w-100" data-translate="verify_email_continue">Continuar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .body-verificar {
+        background-color: #752fe2;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        max-width: 500px;
+        width: 100%;
+    }
+</style>

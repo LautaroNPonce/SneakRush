@@ -1,0 +1,133 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    ViewBag.Title = "Cambiar contraseña";
+}
+
+<style>
+
+    body {
+        background-image: url('/Content/Portadas/Portada 6.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed; /* fondo fijo */
+    }
+
+    .card {
+        background-color: rgba(255, 255, 255, 0.95);
+        max-height: 85vh; /* un poco más corto */
+        overflow-y: auto; /* scroll interno */
+        margin-top: 30px; /* 🔹 baja todo el bloque */
+        scrollbar-width: thin;
+        scrollbar-color: #0072ff #f1f1f1;
+    }
+
+        /* Scroll para Chrome / Edge / Safari */
+        .card::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .card::-webkit-scrollbar-thumb {
+            background-color: #0072ff;
+            border-radius: 4px;
+        }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="card shadow border-0 rounded">
+            <div class="card-header bg-primary text-white text-center">
+                <h4 data-translate="change_password_title">Cambiar Contraseña</h4>
+            </div>
+            <div class="card-body">
+                <form action="@Url.Action("CambiarContraseña", "AccesoAdmin")" method="post">
+                    <input class="form-control" type="hidden" name="idusuario" value="@TempData["IdUsuario"]" />
+
+                    <div class="mb-3">
+                        <label for="inputPasswordActual" class="form-label" data-translate="current_password">Contraseña Actual</label>
+                        <input class="form-control" id="inputPasswordActual" name="contraseñaactual" type="password" value="@ViewData["vContraseña"]" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inputNewPassword" class="form-label" data-translate="new_password">Nueva Contraseña</label>
+                        <input class="form-control" id="inputNewPassword" name="nuevacontraseña" type="password" />
+                        <small class="form-text text-muted">
+                            La contraseña tiene que tener al menos 8 caracteres, una mayúscula y una minúscula.
+                        </small>
+                        <div id="passwordErrors" class="text-danger small mt-1"></div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="inputConfirmPassword" class="form-label" data-translate="confirm_password">Confirmar Nueva Contraseña</label>
+                        <input class="form-control" id="inputConfirmPassword" name="confirmarcontraseña" type="password" />
+                    </div>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger text-center">
+                            @ViewBag.Error
+                        </div>
+                    }
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-success" data-translate="btn_change_password">Cambiar Contraseña</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center py-3">
+                <a href="@Url.Action("Index", "AccesoAdmin")" data-translate="back_to_login">Volver al LogIn</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const passwordInput = document.getElementById("inputNewPassword");
+    const feedback = document.getElementById("passwordFeedback");
+    const idiomaCombo = document.getElementById("comboIdioma");
+
+    // Traducciones (pueden venir de JSON si preferís)
+    const mensajes = {
+        es: {
+            min: "Debe tener al menos 8 caracteres",
+            minus: "Debe incluir al menos una letra minúscula",
+            mayus: "Debe incluir al menos una letra mayúscula",
+            valido: "Contraseña válida"
+        },
+        en: {
+            min: "Must be at least 8 characters long",
+            minus: "Must include at least one lowercase letter",
+            mayus: "Must include at least one uppercase letter",
+            valido: "Password is valid"
+        }
+    };
+
+    function idiomaActual() {
+        return idiomaCombo ? idiomaCombo.value : "es";
+    }
+
+    function validarPassword() {
+        const lang = idiomaActual();
+        const value = passwordInput.value;
+        const t = mensajes[lang];
+        let errores = [];
+
+        if (value.length < 8) errores.push(t.min);
+        if (!/[a-z]/.test(value)) errores.push(t.minus);
+        if (!/[A-Z]/.test(value)) errores.push(t.mayus);
+
+        feedback.innerHTML = "";
+        if (errores.length > 0) {
+            feedback.style.color = "red";
+            feedback.innerHTML = "<ul>" + errores.map(e => `<li>${e}</li>`).join("") + "</ul>";
+        } else {
+            feedback.style.color = "green";
+            feedback.textContent = t.valido;
+        }
+    }
+
+    passwordInput.addEventListener("input", validarPassword);
+    if (idiomaCombo) idiomaCombo.addEventListener("change", validarPassword);
+</script>

@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Sistema no disponible";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="alert alert-warning text-center">
+        <h2 class="mb-3" data-translate="system_unavailable_title">El sistema no está disponible por el momento</h2>
+        <p data-translate="system_unavailable_integrity">Integridad del sistema comprometida</p>
+        <p data-translate="system_unavailable_contact">Por favor, contacte a un administrador.</p>
+
+        <a href="@Url.Action("Index", "TiendaOnline")" class="btn btn-outline-primary mt-3">
+            <i class="fas fa-home"></i> <span data-translate="back_to_store">Volver a la tienda</span>
+        </a>
+    </div>
+</div>

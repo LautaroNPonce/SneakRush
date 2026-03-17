@@ -1,0 +1,68 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    ViewBag.Title = "Login Administrador";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/DiseñosAdmin/Index.css" rel="stylesheet" />
+
+</head>
+<body class="bg-primary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container" style="margin-top:100px;">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3  data-translate="admin_login_title" class="text-center font-weight-light my-4">Administrador - SneakRush</h3></div>
+                                    <div class="card-body">
+                                        <form action="@Url.Action("Index", "AccesoAdmin")" method="post">
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control" id="txtcorreo" name="correo"
+                                                       placeholder="ejemplo@correo.com" required />
+                                                <label for="txtcorreo" data-translate="label_email">Ingrese su email</label>
+                                            </div>
+
+                                            <div class="form-floating mb-3">
+                                                <input type="password" class="form-control" id="txtcontraseña" name="contraseña"
+                                                       placeholder="Contraseña" required />
+                                                <label for="txtcontraseña" data-translate="label_password">Ingrese su contraseña</label>
+                                            </div>
+
+                                            @{
+                                                if (ViewBag.Error != null)
+                                                {
+                                                    <div class="error-container">
+                                                        @ViewBag.Error
+                                                    </div>
+                                                }
+                                            }
+
+                                            <div class="flex-column align-items-center mt-4 mb-0">
+                                                <button type="submit" class="btn btn-primary" data-translate="btn_login">
+                                                    Iniciar sesión
+                                                </button>
+                                                <a class="small" href="@Url.Action("Reestablecer", "AccesoAdmin")" data-translate="forgot_password">
+                                                    ¿Olvidaste tu contraseña?
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

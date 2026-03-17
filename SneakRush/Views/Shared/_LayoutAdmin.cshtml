@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand -->
+        <a class="navbar-brand ps-3" href="index.html" data-translate="app_title">SneakRush</a>
+
+        <!-- Sidebar Toggle -->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Navbar -->
+        <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+
+            <!-- ComboBox de Idioma -->
+            <li class="nav-item d-flex align-items-center me-3">
+                <select id="comboIdioma" class="form-select form-select-sm bg-dark text-white border-0" style="width: 120px;" onchange="cambiarIdioma(this.value)">
+                    <option value="es">Español 🇪🇸</option>
+                    <option value="en">English 🇺🇸</option>
+                </select>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user fa-fw"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">@User.Identity.Name</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="@Url.Action("CerrarSesion" , "AccesoAdmin")">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <!-- Encabezado del Sidebar -->
+                        <div class="sb-sidenav-menu-heading" data-translate="sidebar_summary">RESUMEN</div>
+
+                        <!-- Panel de Control -->
+                        <a class="nav-link" href="@Url.Action("Index" , "Home")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-wrench"></i></div>
+                            <span data-translate="menu_dashboard">Panel de Control</span>
+                        </a>
+
+                        <!-- Usuarios -->
+                        <a class="nav-link" href="@Url.Action("Usuarios" , "Home")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            <span data-translate="menu_users">Usuarios</span>
+                        </a>
+
+                        <!-- Mantenimiento -->
+                        <div class="sb-sidenav-menu-heading" data-translate="sidebar_maintenance">MANTENIMIENTO</div>
+
+                        <!-- Categorías -->
+                        <a class="nav-link" href="@Url.Action("Categoria" , "Mantenimiento")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tags"></i></div>
+                            <span data-translate="menu_categories">Categorías</span>
+                        </a>
+
+                        <!-- Marcas -->
+                        <a class="nav-link" href="@Url.Action("Marca" , "Mantenimiento")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-bookmark"></i></div>
+                            <span data-translate="menu_brands">Marcas</span>
+                        </a>
+
+                        <!-- Productos -->
+                        <a class="nav-link" href="@Url.Action("Producto" , "Mantenimiento")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
+                            <span data-translate="menu_products">Productos</span>
+                        </a>
+
+                        <!-- Permisos -->
+                        <a class="nav-link" href="@Url.Action("Index", "PermisosAdministrador")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-shield-alt"></i></div>
+                            <span data-translate="menu_permisos">Permisos</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    @RenderBody()
+                </div>
+            </main>
+
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">&copy; 2025 SneakRush</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/complementos")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <!-- Este Script es del sistema multidioma -->
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            // Defino la variable 'combo' antes de usarla
+            const combo = document.getElementById('comboIdioma');
+            const idiomaGuardado = localStorage.getItem('idioma') || 'es';
+
+            if (combo) {
+                combo.value = idiomaGuardado;
+                await cargarIdioma(idiomaGuardado);
+            }
+        });
+
+        async function cambiarIdioma(idioma) {
+            localStorage.setItem('idioma', idioma);
+            await cargarIdioma(idioma);
+
+            try {
+                const response = await fetch(`/Home/CambiarIdioma?codigo=${idioma}`);
+                if (!response.ok) {
+                    console.error("Error del servidor al cambiar idioma:", response.status);
+                } else {
+                    console.log("Idioma cambiado correctamente:", idioma);
+                    location.reload();
+                }
+            } catch (error) {
+                console.error("Error al llamar a CambiarIdioma:", error);
+            }
+        }
+
+        async function cargarIdioma(codigo) {
+            try {
+                // Devuelvo La ruta que debe empezar sin tilde (~)
+                const response = await fetch(`/Idiomas/lang_${codigo}.json`);
+                const textos = await response.json();
+
+                // Reemplazo los textos en todos los elementos con data-translate
+                document.querySelectorAll("[data-translate]").forEach(el => {
+                    const key = el.getAttribute("data-translate");
+                    if (textos[key]) el.innerText = textos[key];
+                });
+            } catch (error) {
+                console.error("Error al cargar idioma:", error);
+            }
+        }
+    </script>
+
+</body>
+</html>

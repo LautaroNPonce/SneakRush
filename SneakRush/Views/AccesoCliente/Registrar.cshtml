@@ -1,0 +1,149 @@
+﻿@model BE.Cliente
+
+@{
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    ViewBag.Title = "Registrarse";
+}
+
+<style>
+    body {
+        background-image: url('/Content/Portadas/Portada 6.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed; /* fondo fijo */
+    }
+
+    .card {
+        background-color: rgba(255, 255, 255, 0.95);
+        max-height: 85vh; /* un poco más corto */
+        overflow-y: auto; /* scroll interno */
+        margin-top: 30px; /* 🔹 baja todo el bloque */
+        scrollbar-width: thin;
+        scrollbar-color: #0072ff #f1f1f1;
+    }
+
+        /* Scroll para Chrome / Edge / Safari */
+        .card::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .card::-webkit-scrollbar-thumb {
+            background-color: #0072ff;
+            border-radius: 4px;
+        }
+</style>
+
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="card shadow border-0 rounded">
+            <div class="card-header bg-primary text-white text-center">
+                <h4 data-translate="register_title">Crear una cuenta</h4>
+            </div>
+            <div class="card-body">
+                <form action="@Url.Action("Registrar", "AccesoCliente")" method="post">
+
+                    <div class="mb-3">
+                        <label for="txtnombre" class="form-label" data-translate="label_firstname">Nombre</label>
+                        @Html.TextBoxFor(m => m.Nombres, new { @class = "form-control", @id = "txtnombre", @autocomplete = "off", @placeholder = "Tu nombre", value = ViewData["Nombres"] })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="txtapellidos" class="form-label" data-translate="label_lastname">Apellido</label>
+                        @Html.TextBoxFor(m => m.Apellidos, new { @class = "form-control", @id = "txtapellidos", @autocomplete = "off", @placeholder = "Tu apellido", value = ViewData["Apellidos"] })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="txtcorreo" class="form-label" data-translate="label_email">Correo</label>
+                        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @id = "txtcorreo", @autocomplete = "off", @placeholder = "ejemplo@email.com", value = ViewData["Correo"] })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="txtcontraseña" class="form-label" data-translate="label_password">Contraseña</label>
+                        @Html.PasswordFor(m => m.Clave, new { @class = "form-control", @id = "txtcontraseña", @placeholder = "••••••••" })
+                        <small class="text-muted" data-translate="password_rules">
+                            La contraseña debe tener al menos 8 caracteres, una mayúscula y una minúscula.
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="txtconfirmarcontraseña" class="form-label" data-translate="label_confirm_password">Confirmar Contraseña</label>
+                        @Html.PasswordFor(m => m.ConfirmarContraseña, new { @class = "form-control", @id = "txtconfirmarcontraseña", @placeholder = "Repetí la contraseña" })
+                    </div>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger text-center">
+                            @ViewBag.Error
+                        </div>
+                    }
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-success" data-translate="btn_register">Crear cuenta</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center py-3">
+                <small>
+                    <a href="@Url.Action("Index", "AccesoCliente")" data-translate="already_account">
+                        ¿Ya tenés una cuenta? Iniciar sesión
+                    </a>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const passwordInput = document.getElementById("txtcontraseña");
+    const feedback = document.createElement("ul");
+    feedback.style.color = "red";
+    passwordInput.insertAdjacentElement("afterend", feedback);
+
+    // 🔹 Traducciones internas por idioma (pueden venir del JSON si querés)
+    const mensajes = {
+        es: {
+            min: "Debe tener al menos 8 caracteres",
+            minus: "Debe incluir al menos una letra minúscula",
+            mayus: "Debe incluir al menos una letra mayúscula"
+        },
+        en: {
+            min: "Must be at least 8 characters long",
+            minus: "Must include at least one lowercase letter",
+            mayus: "Must include at least one uppercase letter"
+        }
+    };
+
+    // 🔹 Detectar idioma actual desde el combo
+    function obtenerIdiomaActual() {
+        const combo = document.getElementById("comboIdioma");
+        return combo ? combo.value : "es";
+    }
+
+    // 🔹 Validar contraseña y mostrar feedback traducido
+    function validarContraseña() {
+        const idioma = obtenerIdiomaActual();
+        const password = passwordInput.value;
+        const t = mensajes[idioma];
+        let mensajesAmostrar = [];
+
+        if (password.length < 8) mensajesAmostrar.push(t.min);
+        if (!/[a-z]/.test(password)) mensajesAmostrar.push(t.minus);
+        if (!/[A-Z]/.test(password)) mensajesAmostrar.push(t.mayus);
+
+        feedback.innerHTML = "";
+        mensajesAmostrar.forEach(msg => {
+            const li = document.createElement("li");
+            li.textContent = msg;
+            feedback.appendChild(li);
+        });
+    }
+
+    passwordInput.addEventListener("input", validarContraseña);
+
+    // 🔹 Escuchar también el cambio de idioma para refrescar los textos
+    document.getElementById("comboIdioma").addEventListener("change", validarContraseña);
+</script>
+
+

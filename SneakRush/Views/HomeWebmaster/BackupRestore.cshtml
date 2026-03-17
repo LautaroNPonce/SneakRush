@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "Backup / Restore";
+    Layout = "~/Views/Shared/_LayoutWebmaster.cshtml";
+}
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @TempData["Mensaje"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
+<ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item">
+        <a href="@Url.Action("Index", "HomeWebmaster")" data-translate="breadcrumb_summary">Resumen</a>
+    </li>
+    <li class="breadcrumb-item active" data-translate="breadcrumb_backup">Backup / Restore</li>
+</ol>
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <i class="fas fa-database me-1"></i>
+        <span data-translate="backup_title">Copia de Seguridad / Restauración</span>
+    </div>
+
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <button class="btn btn-success w-100 py-2" onclick="RealizarBackup()">
+                    <i class="fas fa-download me-1"></i>
+                    <span data-translate="btn_backup">Realizar Backup</span>
+                </button>
+            </div>
+
+            <div class="col-md-6">
+                <label for="archivoRestore" class="form-label fw-bold" data-translate="label_select_file">Seleccionar archivo .bak</label>
+                <input type="file" id="archivoRestore" class="form-control mb-2" accept=".bak">
+
+                <button class="btn btn-danger w-100 py-2" onclick="RealizarRestore()">
+                    <i class="fas fa-upload me-1"></i>
+                    <span data-translate="btn_restore">Restaurar Restore</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="mensajeResultado" class="alert d-none"></div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+    function RealizarBackup() {
+        const idioma = localStorage.getItem("idioma") || "es";
+        const textos = {
+            es: {
+                ok: "Backup realizado correctamente.",
+                error: "Error al realizar el backup."
+            },
+            en: {
+                ok: "Backup completed successfully.",
+                error: "Error while creating backup."
+            }
+        };
+        const t = textos[idioma];
+
+        $.ajax({
+            url: '@Url.Action("Backup", "BackupRestore")',
+            type: 'POST',
+            success: function (data) {
+                if (data.exito) {
+                    $("#mensajeResultado")
+                        .removeClass("d-none alert-danger")
+                        .addClass("alert-success")
+                        .text(data.mensaje || t.ok);
+                } else {
+                    $("#mensajeResultado")
+                        .removeClass("d-none alert-success")
+                        .addClass("alert-danger")
+                        .text(data.mensaje || t.error);
+                }
+            },
+            error: function () {
+                $("#mensajeResultado")
+                    .removeClass("d-none alert-success")
+                    .addClass("alert-danger")
+                    .text(t.error);
+            }
+        });
+    }
+
+    function RealizarRestore() {
+        const idioma = localStorage.getItem("idioma") || "es";
+        const textos = {
+            es: {
+                seleccionar: "Seleccione un archivo .bak para restaurar.",
+                confirmar: "¿Estás seguro que querés restaurar la base de datos? Se perderán todos los cambios realizados desde el último backup.",
+                ok: "Restauración completada correctamente.",
+                error: "Error desconocido al realizar el restore."
+            },
+            en: {
+                seleccionar: "Please select a .bak file to restore.",
+                confirmar: "Are you sure you want to restore the database? All changes since the last backup will be lost.",
+                ok: "Restore completed successfully.",
+                error: "Unknown error occurred during restore."
+            }
+        };
+        const t = textos[idioma];
+
+        var archivo = $("#archivoRestore")[0].files[0];
+        if (!archivo) {
+            alert(t.seleccionar);
+            return;
+        }
+        if (!confirm(t.confirmar)) {
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append("archivo", archivo);
+
+        $.ajax({
+            url: '@Url.Action("Restore", "BackupRestore")',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.exito) {
+                    $("#mensajeResultado")
+                        .removeClass("d-none alert-danger")
+                        .addClass("alert-success")
+                        .text(data.mensaje || t.ok);
+                } else {
+                    $("#mensajeResultado")
+                        .removeClass("d-none alert-success")
+                        .addClass("alert-danger")
+                        .text(data.mensaje || t.error);
+                }
+            },
+            error: function () {
+                $("#mensajeResultado")
+                    .removeClass("d-none alert-success")
+                    .addClass("alert-danger")
+                    .text(t.error);
+            }
+        });
+    }
+    </script>
+}
