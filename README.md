@@ -140,12 +140,14 @@ SneakRush implementa un sistema de permisos jerárquico y flexible:
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/image.svg" width="20"/> Capturas
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/globe.svg" width="20"/> Portafolio
 
-_Agregar imágenes del sistema_
+👉 [https://sneakrush-web.vercel.app/](https://sneakrush-web.vercel.app/)
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/download.svg" width="20"/> Instalación
+## <img src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/person.svg" width="20"/> Autor
 
-1. Clonar el repositorio:
+Desarrollado por Lautaro N Ponce
+
+---
